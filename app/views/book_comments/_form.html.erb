@@ -1,6 +1,4 @@
-<!--local: falseに変更-->
 <%= form_with(model:[book, book_comment], local: false) do |f| %>
-  <!--comment-textareaのclassを追加-->
-  <%= f.text_area :comment, rows:'5', class:"w-100 comment-textarea" %>
-  <%= f.submit "送信" %>
+  <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: "w-100 comment-textarea" %>
+  <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
 <% end %>
