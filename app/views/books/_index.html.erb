@@ -14,18 +14,12 @@
           <%= image_tag book.user.get_profile_image, size:'50x50' %>
           <% end %>
         </td>
-        <td><%= link_to book.title,book %></td>
+        <td><%= link_to book.title,book, class: "book_#{book.id}" %></td>
         <td><%= book.body %></td>
-
-        <!--クラス名を動的に生成するために、文字列の連結を使用-->
         <td class=<%= "favorite-" + book.id.to_s %> >
-          <%= render 'favorites/favorite-btn', book: book %>
+            <%= render "favorites/btn", book: book %>
         </td>
-
-        <!--classを追加、コメント表示を部分テンプレートを読み込む記述に変更-->
-        <td class="book-comments-counter">
-          <%= render 'book_comments/counter', book: book %>
-        </td>
+        <td><%= render "book_comments/counter", book: book %></td>
       </tr>
     <% end %>
   </tbody>
