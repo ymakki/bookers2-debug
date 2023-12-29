@@ -15,6 +15,7 @@
             <th></th>
             <th>グループ名</th>
             <th>紹介文</th>
+            <th>メンバー</th>
             <th colspan="3"></th>
           </tr>
         </thead>
@@ -31,8 +32,20 @@
             <td><%= @group.name %></td>
             <td><%= @group.introduction %></td>
             <td>
-              <% if @group.owner_id == current_user.id %>
-                <%= link_to 'Edit', edit_group_path(@group), class: "btn btn-sm btn-success" %>
+              <% @group.users.each do |user| %>
+              　<li style="list-style: none;"><%= user.name %></li>
+              <% end %>
+            </td>
+            <td>
+              <!--ログインしているユーザーがそのグループのオーナーの場合、グループ情報を編集するための「Edit」ボタンを表示-->
+              <% if @group.is_owned_by?(current_user) %>
+              　　<%= link_to 'Edit', edit_group_path(@group), class: "btn btn-sm btn-success" %>
+              <!--ログインしているユーザーがそのグループのメンバーの場合、グループから退会するための「Leave this group」ボタンを表示-->
+              <% elsif @group.includesUser?(current_user)%>
+              　　<%= link_to 'Leave this group', group_group_users_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
+              <!--ログインしているユーザーがそのグループのメンバーでもオーナーでもない場合、グループに参加するための「Join this group」ボタンを表示-->
+              <% else %>
+              　　<%= link_to 'Join this group', group_group_users_path(@group), method: :post, class: "btn btn-sm btn-success" %>
               <% end %>
             </td>
           </tr>
