@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   	get "daily_posts" => "users#daily_posts"
   end
 
+  resources :groups, only: [:new, :index, :show, :create, :edit, :update]
+
   resources :messages, only: [:create]
   resources :rooms, only: [:create, :show]
 
