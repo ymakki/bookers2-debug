@@ -48,6 +48,7 @@
               　　<%= link_to 'Join this group', group_group_users_path(@group), method: :post, class: "btn btn-sm btn-success" %>
               <% end %>
             </td>
+            <td><%= link_to 'Mail',group_new_mail_path(@group), class: "fas fa-paper-plane" %></td>
           </tr>
         </tbody>
       </table>
