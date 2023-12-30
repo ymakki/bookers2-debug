@@ -7,14 +7,13 @@ class User < ApplicationRecord
   has_many :books
   has_many :book_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :group_users, dependent: :destroy
 
   has_many :entries, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :rooms, through: :entries
-
   has_many :read_counts, dependent: :destroy
 
-  has_many :group_users, dependent: :destroy
   has_many :groups, through: :group_users
 
   # 自分がフォローされる（被フォロー）側の関係性
