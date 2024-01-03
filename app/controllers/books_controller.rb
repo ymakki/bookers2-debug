@@ -23,7 +23,7 @@ class BooksController < ApplicationController
         a.favorites.where(created_at: from...to).size
       }
     end
-      @book = Book.new
+    @book = Book.new
   end
 
   def create
@@ -56,7 +56,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :rate)
+    params.require(:book).permit(:title, :body, :rate, :category)
   end
 
   def ensure_correct_user
