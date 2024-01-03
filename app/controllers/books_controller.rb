@@ -11,13 +11,19 @@ class BooksController < ApplicationController
   end
 
   def index
-    to  = Time.current.at_end_of_day
-    from  = (to - 6.day).at_beginning_of_day
-    @books = Book.all.sort {|a,b|
-      b.favorites.where(created_at: from...to).size <=>
-      a.favorites.where(created_at: from...to).size
-    }
-    @book = Book.new
+    if params[:latest]
+      @books = Book.latest
+    elsif params[:star_count]
+      @books = Book.star_count
+    else
+      to  = Time.current.at_end_of_day
+      from  = (to - 6.day).at_beginning_of_day
+      @books = Book.all.sort {|a,b|
+        b.favorites.where(created_at: from...to).size <=>
+        a.favorites.where(created_at: from...to).size
+      }
+    end
+      @book = Book.new
   end
 
   def create
@@ -50,7 +56,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :star)
+    params.require(:book).permit(:title, :body, :rate)
   end
 
   def ensure_correct_user

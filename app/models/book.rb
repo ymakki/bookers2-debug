@@ -24,6 +24,10 @@ class Book < ApplicationRecord
   scope :created_this_week, -> { where(created_at: 6.day.ago.beginning_of_day..Time.zone.now.end_of_day) }
   scope :created_last_week, -> { where(created_at: 2.week.ago.beginning_of_day..1.week.ago.end_of_day) }
 
+  # 星レビュー機能に、評価の高い順、新しい順、古い順に並び替え
+  scope :latest, -> {order(created_at: :desc)}
+  scope :star_count, -> {order(rate: :desc)}
+
   def favorited_by?(user)
     favorites.where(user_id: user.id).exists?
   end

@@ -1,5 +1,5 @@
 class AddStarToBooks < ActiveRecord::Migration[6.1]
   def change
-    add_column :books, :star, :string
+    add_column :books, :rate, :string
   end
 end
