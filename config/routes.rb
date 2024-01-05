@@ -9,9 +9,13 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   resources :users, only: [:index,:show,:edit,:update] do
+    # ユーザー間のフォロー／アンフォロー機能を実現(応用課題4)
     resource :relationships, only: [:create, :destroy]
+    # followings アクションを呼び出すルートを設定(応用課題4)
   	get 'followings' => 'relationships#followings', as: 'followings'
+    # followers アクションを呼び出すルートを設定(応用課題4)
   	get 'followers' => 'relationships#followers', as: 'followers'
+    # daily_posts アクションを呼び出すルートを設定(応用課題9b)
   	get "daily_posts" => "users#daily_posts"
   end
 
@@ -21,11 +25,14 @@ Rails.application.routes.draw do
     get "event_notices" => "event_notices#sent"
   end
 
-  resources :messages, only: [:create]
-  resources :rooms, only: [:create, :show]
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+
+  # 検索メソッドの呼び出しパス設定(応用課題5)
   get '/search', to: 'searches#search'
+
+  # ChatsControllerのshowとcreateアクションに対するルートを生成(応用課題8a)
+  resources :chats, only: [:show, :create]
 
   get 'tagsearches/search', to: 'tagsearches#search'
 

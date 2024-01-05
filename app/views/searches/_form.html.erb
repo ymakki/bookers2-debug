@@ -1,3 +1,4 @@
+<!--検索ワードの入力、検索モデルの選択、検索方法の設定(応用課題5)-->
 <% if user_signed_in? %>
   <%= form_with url: search_path, method: :get, local: true do |f| %>
     <%= f.text_field :content %>

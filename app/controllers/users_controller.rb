@@ -4,25 +4,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @currentUserEntry = Entry.where(user_id: current_user.id)
-    @userEntry = Entry.where(user_id: @user.id)
-    unless @user.id == current_user.id
-      @currentUserEntry.each do |cu|
-        @userEntry.each do |u|
-          if cu.room_id == u.room_id
-            @isRoom = true
-            @roomId = cu.room_id
-          end
-        end
-      end
-      if @isRoom
-      else
-        @room = Room.new
-        @entry = Entry.new
-      end
-    end
-    @book = Book.new
     @books = @user.books
+    @book = Book.new
+    # 本の投稿データを代入(応用課題7b)
     @today_book = @books.created_today
     @yesterday_book = @books.created_yesterday
     @this_week_book = @books.created_this_week
@@ -45,8 +29,8 @@ class UsersController < ApplicationController
     end
   end
 
+  # 特定のユーザーが特定の日に作成した書籍（books）を取得するためのアクション(応用課題9b)
   def daily_posts
-
     user = User.find(params[:user_id])
     @books = user.books.where(created_at: params[:created_at].to_date.all_day)
     render :daily_posts_form

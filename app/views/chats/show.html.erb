@@ -1,0 +1,25 @@
+<h1 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>">
+  <%= @user.name %> さんとのチャット
+</h1>
+
+<!--【非同期通信】チャットのメッセージ一覧を表示(応用課題8a)-->
+<div class="message" style="width: 400px;">
+  <% @chats.each do |chat| %>
+    <% if chat.user_id == current_user.id %>
+      <p style="text-align: right;"><%= chat.message %></p>
+    <% else %>
+      <p style="text-align: left;"><%= chat.message %></p>
+    <% end %>
+  <% end %>
+</div>
+
+<!--【非同期通信】チャット送信負荷の場合のエラー表示(応用課題8a)-->
+<div class="errors">
+  <%= render "layouts/errors", obj: @chat %>
+</div>
+
+<!--チャットのメッセージ入力フォーム(応用課題8a)-->
+<%= form_with model: @chat, data: {remote: true} do |f| %>
+  <%= f.text_field :message %>
+  <%= f.hidden_field :room_id %>
+<% end %>

@@ -4,6 +4,9 @@
       <th>image</th>
       <th>name</th>
       <th colspan="3"></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -11,6 +14,11 @@
       <tr>
         <td><%= image_tag user.get_profile_image, size: '50x50' %></td>
         <td><%= user.name %></td>
+        <!--フォロー、フォロワー数表示(応用課題4)-->
+        <td>フォロー数: <%= user.followings.count %></td>
+        <td>フォロワー数: <%= user.followers.count %></td>
+        <!--フォロー登録、解除ボタン(応用課題4)-->
+        <td><%= render "relationships/btn", user: user %></td>
         <td><%= link_to 'Show', user, class: "user_#{user.id}" %></td>
       </tr>
     <% end %>

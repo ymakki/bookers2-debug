@@ -10,12 +10,15 @@
       </thead>
       <tbody>
         <tr>
+          <!--今日の投稿数表示(応用課題7b)-->
           <td><%=  @today_book.count %></td>
+          <!--昨日の投稿数表示(応用課題7b)-->
           <td><%= @yesterday_book.count %></td>
           <td>
             <% if @yesterday_book.count == 0 %>
               前日の投稿が0のため計算できません
             <% else %>
+              <!--前日比の表示(応用課題7b)-->
               <% @the_day_before =   @today_book.count / @yesterday_book.count.to_f  %>
               <%= (@the_day_before * 100).round %>%
             <% end %>
@@ -35,12 +38,15 @@
       </thead>
       <tbody>
         <tr>
+          <!--今週の投稿数表示(応用課題7b)-->
           <td><%= @this_week_book.count %></td>
+          <!--前週の投稿数の表示(応用課題7b)-->
           <td><%= @last_week_book.count %></td>
           <td>
             <% if @last_week_book.count == 0 %>
               前週の投稿が0のため計算できません
             <% else %>
+              <!--前週比の表示(応用課題7b)-->
               <% @the_week_before = @this_week_book.count / @last_week_book.count.to_f  %>
               <%= (@the_week_before * 100).round %>%
             <% end %>
@@ -64,6 +70,7 @@
     </thead>
     <tbody>
       <tr>
+        <!--7日分の投稿数の表示(応用課題8b)-->
         <td><%= @books.created_6day_ago.count %></td>
         <td><%= @books.created_5day_ago.count %></td>
         <td><%= @books.created_4day_ago.count %></td>
@@ -74,12 +81,17 @@
       </tr>
     </tbody>
   </table>
+  <!--グラフや描画を行うための描画領域を提供(↓ 応用課題8b)-->
   <canvas id="myLineChart"></canvas>
   <script>
+    // ここにTurbolinksがロードされた後に実行されるJavaScriptコードを追加します
     $(document).on('turbolinks:load', function() {
+      // グラフやチャートを描画するための前提条件
       var ctx = document.getElementById("myLineChart");
+      // ラインチャートの作成
       var myLineChart = new Chart(ctx, {
         type: 'line',
+        // ラインチャートのデータ
         data: {
           labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
           datasets: [

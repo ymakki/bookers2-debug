@@ -4,6 +4,7 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    # ユーザーが閲覧した履歴を保存する(応用課題9a)
     unless ReadCount.find_by(user_id: current_user.id, book_id: @book.id)
       current_user.read_counts.create(book_id: @book.id)
     end
@@ -16,6 +17,7 @@ class BooksController < ApplicationController
     elsif params[:star_count]
       @books = Book.star_count
     else
+      # @booksにはお気に入りの数が多い順にソートされた本が代入(応用課題7a)
       to  = Time.current.at_end_of_day
       from  = (to - 6.day).at_beginning_of_day
       @books = Book.all.sort {|a,b|

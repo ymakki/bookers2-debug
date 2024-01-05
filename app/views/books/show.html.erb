@@ -20,13 +20,18 @@
 
           <td><%= link_to @book.category,tagsearches_search_path(content: @book.category) %></td>
 
+          <!--【非同期通信】いいね数表示のためにクラスを追加(応用課題6)-->
           <td class=<%= "favorite-" + @book.id.to_s %> >
             <%= render "favorites/btn", book: @book %>
           </td>
+          <!--【非同期通信】コメント数表示のためにクラスを追加(応用課題6)-->
           <td class="book-comments-counter">
             <%= render "book_comments/counter", book: @book %>
           </td>
+
           <td><%= render "static_rate", book: @book %></td>
+
+          <!--閲覧数の表示(応用課題9a)-->
           <td>閲覧数: <%= @book.read_counts.count %></td>
           <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
@@ -34,7 +39,11 @@
           <% end %>
         </tr>
       </table>
-      <%= render "book_comments/index", book: @book %>
+      <!--【非同期通信】コメント一覧表示のためにクラスを追加(応用課題6)-->
+      <div class="book-comments-index">
+        <%= render "book_comments/index", book: @book %>
+      </div>
+      <!--コメント投稿フォーム(応用課題3)-->
       <%= render "book_comments/form", book: @book, book_comment: @book_comment %>
     </div>
   </div>

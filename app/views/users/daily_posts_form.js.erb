@@ -1,7 +1,11 @@
+<!--指定した日時の検索結果を非同期通信で表示(応用課題9b)-->
 $('.daily_posts_table').html(`
   <h2>検索結果</h2>
+  <!--card クラスを使用したカード要素。カードは情報を整理して表示するためのコンポーネント-->
   <div class="card" >
+    <!--カードのヘッダー部分に表示されるラベル-->
     <div class="card-header">投稿数</div>
+    <!--カードの本文部分に、@books.count の投稿数が表示-->
     <div class="card-body">
       <%= j( @books.count ) %>
     </div>

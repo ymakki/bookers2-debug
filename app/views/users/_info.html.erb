@@ -10,37 +10,27 @@
   </tr>
   <tr>
     <th>follows</th>
+    <!--フォロー数、クリックしたらフォローしているユーザー一覧表示に飛ぶ(応用課題4)-->
     <th><%= link_to user.followings.count, user_followings_path(user) %></th>
   </tr>
   <tr>
     <th>followers</th>
+    <!--フォロワー数、クリックしたらフォローされているユーザー一覧表示に飛ぶ(応用課題4)-->
     <th><%= link_to user.followers.count, user_followers_path(user) %></th>
   </tr>
 </table>
 
 <div class='row'>
   <% if current_user != user %>
+  　<!--フォローボタン、フォロー解除ボタン(応用課題4)-->
     <td><%= render "relationships/btn", user: user %></td>
-  <% end %>
-  <td>
-    <% if user != current_user %>
-      <% if (current_user.following?(user)) && (user.following?(current_user)) %>
-        <% if isRoom == true %>
-          <%= link_to "チャットへ",  room_path(roomId), class: "btn btn-primary" %>
-        <% else %>
-          <%= form_for room do |f| %>
-            <%= fields_for entry do |e| %></td>
-              <%= e.hidden_field:user_id, value: user.id %>
-            <% end %>
-            <%= f.submit "チャットを始める", class: "btn btn-primary user-show-chat" %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-  </td>
-  <td>
+  <% else %>
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block  edit_user_#{user.id}" do %>
       <i class="fas fa-user-cog"></i>
     <% end %>
-  </td>
+  <% end %>
+  <!--相互フォローならチャットの開始ボタンを表示(応用課題8a)-->
+  <% if current_user != user && current_user.following?(user) && user.following?(current_user) %>
+    <%= link_to 'chatを始める', chat_path(user.id), class: "ml-3" %>
+  <% end %>
 </div>

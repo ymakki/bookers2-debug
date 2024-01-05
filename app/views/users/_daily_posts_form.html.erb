@@ -1,3 +1,4 @@
+<!--特定のユーザーの特定の日に作成された書籍を検索するためのフォーム(応用課題9b)-->
 <div class="my-3">
   <%= form_with url: user_daily_posts_path(user), method: :get, class: "row justify-content-center", local: false do |f| %>
     <div class="col-auto">
@@ -9,5 +10,6 @@
   <% end %>
 </div>
 
+<!--結果を表示するための空の div 要素を含むHTMLコード(応用課題9b)-->
 <div class="daily_posts_table">
 </div>

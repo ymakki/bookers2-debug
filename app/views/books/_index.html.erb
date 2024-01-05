@@ -20,11 +20,15 @@
 
         <td><%=link_to book.category,tagsearches_search_path(content: book.category)%></td>
 
+        <!--非同期通信処理を読み込む箇所にクラス名を記述(応用課題6)-->
         <td class=<%= "favorite-" + book.id.to_s %> >
             <%= render "favorites/btn", book: book %>
         </td>
+        <!--コメント数表示(応用課題3)-->
         <td><%= render "book_comments/counter", book: book %></td>
+
         <td><%= render "books/static_rate", book: book %></td>
+        <!--閲覧数の表示(応用課題9a)-->
         <td>閲覧数: <%= book.read_counts.count %></td>
       </tr>
     <% end %>
