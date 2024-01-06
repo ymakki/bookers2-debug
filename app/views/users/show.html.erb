@@ -9,7 +9,9 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
+      <!--指定した日の投稿検索の部分テンプレート呼び出し(応用課題9b)-->
       <%= render 'daily_posts_form', user: @user %>
+      <!--投稿数のデータ表部分テンプレート呼び出し(応用課題7b)-->
       <%= render 'book_index',books: @books %>
     </div>
   </div>

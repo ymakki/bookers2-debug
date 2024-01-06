@@ -16,9 +16,10 @@ class User < ApplicationRecord
   # 閲覧データをもつ(応用課題9a)
   has_many :read_counts, dependent: :destroy
 
+  # UserModel は GroupUser モデル(中間テーブル)と複数の関連を持つ(応用課題7c)
+  has_many :group_users, dependent: :destroy
 
   has_many :groups, through: :group_users
-  has_many :group_users, dependent: :destroy
 
   # 自分がフォローされる（被フォロー）側の関係性(応用課題4)
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy

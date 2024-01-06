@@ -1,5 +1,7 @@
 class EventMailer < ApplicationMailer
 
+  # (↓ 応用課題9c)
+
   # 下のクラスメソッド内で使用するメソッド
   # このメソッド（アクション）が発動するとviews/event_mailer/send_notification.text.erbを呼出して、
   # メールを引数のデータに従ってメールを作成する。
@@ -8,8 +10,8 @@ class EventMailer < ApplicationMailer
     @title = event[:title]
     @body = event[:body]
 
-    #メールを新規作成
-     #from→送り主、to→送り先、subject→メールタイトルを入力
+    # メールを新規作成
+    # from→送り主、to→送り先、subject→メールタイトルを入力
     @mail = EventMailer.new()
 
     mail(
@@ -19,7 +21,7 @@ class EventMailer < ApplicationMailer
     )
   end
 
-  #　このクラスメソッドが呼出されるとメールをグループメンバにメールを送信する
+  # このクラスメソッドが呼出されるとメールをグループメンバにメールを送信する
   # フォームでメールを送信を押したタイミングで発動(event_noticesコントローラの#create呼出時)
   def self.send_notifications_to_group(event) #引数のeventはevent_noticesコントローラでハッシュでデータを入れている
     group = event[:group] #group_idを呼出

@@ -19,11 +19,16 @@ Rails.application.routes.draw do
   	get "daily_posts" => "users#daily_posts"
   end
 
+  # groups リソースに対する標準的なRESTfulなアクションを指定(応用課題7c)
   resources :groups, only: [:new, :index, :show, :create, :edit, :update] do
+    # GroupUsersController の中の create と destroy アクションが対応するパスを生成(応用課題8c)
     resource :group_users, only: [:create, :destroy]
+    # 新しい通知を作成するフォーム表示 (new) や実際に通知を作成する処理 (create)するルーティングを定義(応用課題9c)
     resources :event_notices, only: [:new, :create]
+    # "/event_notices" にアクセスすると EventNoticesController の sent アクションが実行(応用課題9c)
     get "event_notices" => "event_notices#sent"
   end
+
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 

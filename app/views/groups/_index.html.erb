@@ -8,11 +8,14 @@
     </tr>
   </thead>
   <tbody>
+    <!--グループの一覧表示(応用課題7c)-->
     <% groups.each do |group| %>
       <tr>
         <td><%= image_tag group.get_image, size: '50x50' %></td>
         <td><%= link_to group.name, group, class: "group_#{group.id}" %></td>
+        <!--グループ内のユーザー数表示(応用課題8c)-->
         <td><%= group.group_users.count %></td>
+        <!--group が current_user によって所有されている場合にのみ、"Edit" リンクを表示する(応用課題7c)-->
         <% if group.is_owned_by?(current_user) %>
           <td><%= link_to 'Edit', edit_group_path(group), class: "group_#{group.id} btn btn-sm btn-success" %></td>
         <% end %>

@@ -1,4 +1,4 @@
-class Public::EventNoticesController < ApplicationController
+class EventNoticesController < ApplicationController
   before_action :authenticate_user!
 
   def new
@@ -27,6 +27,7 @@ class Public::EventNoticesController < ApplicationController
 
   end
 
+  # sent アクションが実行されるとユーザーが指定したグループのページにリダイレクト(応用課題9c)
   def sent
     redirect_to group_path(params[:group_id])
   end
