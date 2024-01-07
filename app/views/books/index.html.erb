@@ -8,9 +8,13 @@
       <%= render 'form', book: @book %>
     </div>
     <div class='col-md-8 offset-md-1'>
-      <%= link_to '新しい順', books_path(latest: "true") %>
-      | <%= link_to '評価の高い順', books_path(star_count: "true") %>
       <h2>Books</h2>
+      <!--新しい順や評価の高い順に書籍をソートするためのリンクを生成(応用課題8d)-->
+      <!--created_at カラムを降順（DESC）でソートした書籍一覧が表示-->
+      <%= link_to "新しい順", books_path(sort: 'created_at DESC') %>
+      <!--rate カラムを降順（DESC）でソートした書籍一覧が表示-->
+      | <%= link_to "評価の高い順", books_path(sort: 'rate DESC') %>
+
       <%= render 'index', books: @books%>
     </div>
   </div>

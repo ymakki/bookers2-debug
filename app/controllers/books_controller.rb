@@ -12,10 +12,10 @@ class BooksController < ApplicationController
   end
 
   def index
-    if params[:latest]
-      @books = Book.latest
-    elsif params[:star_count]
-      @books = Book.star_count
+    # params[:sort] が存在する場合(応用課題8d)
+    if params[:sort]
+      # Book モデルのすべてのレコードを取得し、指定されたソート順で並べ替え(応用課題8d)
+      @books = Book.all.order(params[:sort])
     else
       # @booksにはお気に入りの数が多い順にソートされた本が代入(応用課題7a)
       to  = Time.current.at_end_of_day
@@ -31,7 +31,12 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    # HTTPリクエストから取得されたparamsハッシュからbookというキーを介してtag_nameの値を取得し、
+    # それをコンマで区切って配列に変換しています(応用課題9d)
+    tag_list = params[:book][:tag_name].split(',')
     if @book.save
+      # tag_listを引数にsave_tagsメソッドを呼び出し(応用課題9d)
+      @book.save_tags(tag_list)
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @books = Book.all
@@ -58,7 +63,8 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :rate, :category)
+    # rateカラムを保存できるようにデータ操作を許可(応用課題7d)
+    params.require(:book).permit(:title, :body, :rate)
   end
 
   def ensure_correct_user

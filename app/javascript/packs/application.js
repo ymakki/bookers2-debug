@@ -17,6 +17,8 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+// raty.jsというJavaScriptライブラリからRatyというオブジェクトをインポートして、
+// グローバル変数のwindow.ratyに設定(応用課題7d)
 import Raty from "raty.js"
 window.raty = function(elem,opt) {
   let raty =  new Raty(elem,opt)
@@ -24,4 +26,5 @@ window.raty = function(elem,opt) {
   return raty;
 }
 
+// jQueryを呼び出す(応用課題7d)
 window.$ = window.jQuery = require('jquery');

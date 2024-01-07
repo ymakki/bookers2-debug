@@ -29,16 +29,12 @@ Rails.application.routes.draw do
     get "event_notices" => "event_notices#sent"
   end
 
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-
-  # 検索メソッドの呼び出しパス設定(応用課題5)
+  # 検索メソッドの呼び出しパス設定(応用課題5 / 応用課題9d)
   get '/search', to: 'searches#search'
 
   # ChatsControllerのshowとcreateアクションに対するルートを生成(応用課題8a)
   resources :chats, only: [:show, :create]
-
-  get 'tagsearches/search', to: 'tagsearches#search'
 
 end

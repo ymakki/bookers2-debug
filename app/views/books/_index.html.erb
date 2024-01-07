@@ -17,16 +17,20 @@
         </td>
         <td><%= link_to book.title,book, class: "book_#{book.id}" %></td>
         <td><%= book.body %></td>
-
-        <td><%=link_to book.category,tagsearches_search_path(content: book.category)%></td>
-
+        <!--その本に紐づいたタグを一覧表示(応用課題9d)-->
+        <td>
+          <% book.tags.each do |tag| %>
+            <!--フォームで打ち込んだtag_nameをリンク先にして、Searchesの検索結果Viewへ飛ぶ(応用課題9d)-->
+            <li style="list-style: none;"><%= link_to tag.name, search_path(content: tag.name, model:"tag", method: "perfect") %></li>
+          <% end %>
+        </td>
         <!--非同期通信処理を読み込む箇所にクラス名を記述(応用課題6)-->
         <td class=<%= "favorite-" + book.id.to_s %> >
             <%= render "favorites/btn", book: book %>
         </td>
         <!--コメント数表示(応用課題3)-->
         <td><%= render "book_comments/counter", book: book %></td>
-
+        <!--レビュー評価数表示(応用課題7d)-->
         <td><%= render "books/static_rate", book: book %></td>
         <!--閲覧数の表示(応用課題9a)-->
         <td>閲覧数: <%= book.read_counts.count %></td>

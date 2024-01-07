@@ -1,8 +1,12 @@
 <!--検索結果を一覧表示(応用課題5)-->
 <% if @model == 'user' %>
 	<h3>Users search for "<%= @content %>"</h3>
+	<!--def self.search_forメソッドで得た情報が@recordsに代入され、ここのindexへ渡される(応用課題5)-->
   <%= render 'users/index', users: @records %>
-<% elsif @model == 'book' %>
+<!--@model が 'book' または 'tag' の場合に特定の表示(応用課題9d)-->
+<% elsif @model == 'book' || @model == 'tag' %>
 	<h3>Books search for "<%= @content %>"</h3>
+	<!--def self.search_forメソッドで得た情報が@recordsに代入され、ここのindexへ渡される(応用課題5)-->
+	<!--def self.search_books_forメソッドで得た情報が@recordsに代入され、ここのindexへ渡される(応用課題9d)-->
   <%= render 'books/index', books: @records %>
 <% end %>

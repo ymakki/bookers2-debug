@@ -15,11 +15,13 @@
     <%= render 'layouts/header' %>
       <main>
         <p id="notice"><%= notice %></p>
-        <div class="d-flex justify-content-center mb-2">
-          <% if user_signed_in? %>
-            <%= render 'searches/form' %>
-            <%= render 'tagsearches/tagsearch' %>
-          <% end %>
+        <div class="container">
+          <div class="row justify-content-start mb-2">
+            <!--ユーザー、本の検索フォーム表示(応用課題5)-->
+            <div class="mr-3"><%= render 'searches/form' %></div>
+            <!--タグの検索フォーム表示(応用課題9d)-->
+            <div class="mr-3"><%= render "searches/tag_form" %></div>
+          </div>
         </div>
         <%= yield %>
       </main>

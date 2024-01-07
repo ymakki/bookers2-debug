@@ -17,9 +17,13 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-
-          <td><%= link_to @book.category,tagsearches_search_path(content: @book.category) %></td>
-
+          <!--その本に紐づいたタグを一覧表示(応用課題9d)-->
+          <td>
+            <% @book.tags.each do |tag| %>
+              <!--フォームで打ち込んだtag_nameをリンク先にして、Searchesの検索結果Viewへ飛ぶ(応用課題9d)-->
+              <li style="list-style: none;"><%= link_to tag.name, search_path(content: tag.name, model:"tag", method: "perfect") %></li>
+            <% end %>
+          </td>
           <!--【非同期通信】いいね数表示のためにクラスを追加(応用課題6)-->
           <td class=<%= "favorite-" + @book.id.to_s %> >
             <%= render "favorites/btn", book: @book %>
@@ -28,9 +32,8 @@
           <td class="book-comments-counter">
             <%= render "book_comments/counter", book: @book %>
           </td>
-
+          <!--レビュー評価数表示(応用課題7d)-->
           <td><%= render "static_rate", book: @book %></td>
-
           <!--閲覧数の表示(応用課題9a)-->
           <td>閲覧数: <%= @book.read_counts.count %></td>
           <% if @book.user == current_user %>

@@ -1,17 +1,27 @@
+<!--(↓ 応用課題7d)-->
+<!--評価を表示するための div 要素を生成-->
 <div id="rate_<%= book.id %>"></div>
 <script>
+// JavaScriptのコードです。Turbolinksが読み込まれた時（'turbolinks:load' イベント）に実行されるコード
 $(document).on('turbolinks:load', function() {
+  // 生成した div 要素を取得
   let elem = document.querySelector('#rate_<%= book.id %>');
+  // 要素が存在しない場合は以降の処理を中断
   if (elem == null) return;
 
+  // div 要素の中身を空にします。これにより、スターレーティングを表示するためのスペースが確保されます
   elem.innerHTML = "";
+  // スターレーティングのオプションを設定
   let opt = {
     starOn: "<%= asset_path('star-on.png') %>",
     starOff: "<%= asset_path('star-off.png') %>",
     starHalf: "<%= asset_path('star-half.png') %>",
+    // ブックの評価を表示
     score: "<%= book.rate %>",
+    // ユーザーが評価を変更できないようにするためのオプション
     readOnly: true,
   };
+  // スターレーティングの表示を初期化します。elem にスターレーティングが表示されます
   raty(elem, opt);
 });
 </script>

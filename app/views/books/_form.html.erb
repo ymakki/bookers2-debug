@@ -7,42 +7,53 @@
     <%= f.label :opinion %>
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
-
+  <!--タグの記入フォーム生成(応用課題9d)-->
   <div class="form-group">
-    <label>Tag</label>
-    <%= f.text_field :category,class: 'form-control book_category' %>
+    <%= f.label "Tag" %>
+    <%= f.text_field :tag_name, class: 'form-control book_tag_name' %>
   </div>
-
-  <!--starについての記述-->
+  <!--(↓ 応用課題7d)-->
+  <!--ブックがまだ存在しない（新規作成中の場合）場合の条件分岐-->
   <% if book.id.nil? %>
+    <!--評価（rate）を入力するためのフォームグループの開始-->
     <div class="form-group" id="star">
       <%= f.label :rate %>
+      <!--: 実際の評価値を格納するための隠しフィールド。表示はされないが、データは送信される-->
       <%= f.hidden_field :rate, id: :review_star, class: 'form-control' %>
+      <!--スターレーティングを表示するための要素。JavaScriptで後で処理される-->
       <div id="post_raty"></div>
     </div>
     <script>
+      // JavaScriptのコード。Turbolinksが読み込まれた時（'turbolinks:load' イベント）に実行されるコード
       $(document).on('turbolinks:load', function() {
+        // #post_raty というIDを持つ要素を取得
         let elem = document.querySelector('#post_raty');
+        // 要素が存在しない場合は、以降の処理を中断
         if (elem == null) return;
 
+        // #post_raty 内のHTMLを空にします
         elem.innerHTML = ""
+        // スターレーティングのオプションを設定
         let opt = {
           starOn: "<%= asset_path('star-on.png') %>",
           starOff: "<%= asset_path('star-off.png') %>",
           starHalf: "<%= asset_path('star-half.png') %>",
+          // 送信される評価のパラメータ名を指定
           scoreName: 'book[rate]',
         };
+        // スターレーティングの表示を初期化します。elem にスターレーティングが表示されます
         raty(elem, opt);
       });
     </script>
   <% else %>
+    <!--評価を表示するためのフォームグループの開始-->
     <div class="form-group">
+      <!--レビュー評価数表示-->
       <%= render "static_rate", book: book %>
     </div>
   <% end %>
-
+  <!--最終的な送信ボタンを表示-->
   <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>
   </div>
 <% end %>
-
