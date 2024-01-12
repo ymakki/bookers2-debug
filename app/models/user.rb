@@ -67,6 +67,31 @@ class User < ApplicationRecord
       User.where('name LIKE ?', '%' + content + '%')
     end
   end
+
+  # guestメソッド(ゲストログイン機能を実装しよう)
+  GUEST_USER_EMAIL = "guest@example.com"
+
+  def self.guest
+    find_or_create_by!(email: GUEST_USER_EMAIL) do |user|
+    # ↑ find_or_create_byは、データの検索と作成を自動的に判断して処理を行う、Railsのメソッド
+    #   具体的には、find_or_create_by(条件)の条件としたデータが存在するかどうかを判断した上で
+    #   ・存在する場合には、そのデータを返す
+    #   ・存在しない場合は、新規作成する
+    #   という判断と処理を行います。
+
+    # また、find_or_create_by!の「!」を付与することで、
+    # 処理がうまくいかなかった場合にエラーが発生するようになり、結果不具合を検知しやすくなります
+      user.password = SecureRandom.urlsafe_base64
+      # ↑ SecureRandom.urlsafe_base64は、ランダムな文字列を生成するRubyのメソッドの一種
+      user.name = "guestuser"
+    end
+  end
+
+  # ゲストユーザーであるかの判別メソッド(ゲストログイン機能を実装しよう)
+  def guest_user?
+    email == GUEST_USER_EMAIL
+  end
+
 end
 
 

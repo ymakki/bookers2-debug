@@ -25,8 +25,11 @@
   　<!--フォローボタン、フォロー解除ボタン(応用課題4)-->
     <td><%= render "relationships/btn", user: user %></td>
   <% else %>
-    <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block  edit_user_#{user.id}" do %>
-      <i class="fas fa-user-cog"></i>
+    <% unless user.guest_user? %>
+    <!--↑ ユーザーのemailがguest@example.comである場合、ボタンを表示しない(ゲストログイン機能を実装しよう)-->
+      <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block  edit_user_#{user.id}" do %>
+        <i class="fas fa-user-cog"></i>
+      <% end %>
     <% end %>
   <% end %>
   <!--相互フォローならチャットの開始ボタンを表示(応用課題8a)-->

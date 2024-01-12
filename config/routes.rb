@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  # sessions_controllerのアクションへ処理をつなげる (ゲストログイン機能を実装しよう)
+  devise_scope :user do
+    post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+  end
+
   root :to =>"homes#top"
   get "home/about"=>"homes#about"
 
