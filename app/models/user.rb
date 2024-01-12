@@ -7,6 +7,8 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy
   has_many :book_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  # ↓【Rails】通知機能を実装してみよう
+  has_many :notifications, dependent: :destroy
 
   # DM機能には、Userモデル、Entryモデル、Roomモデル、Messageモデルの4つが必要(応用課題8a)
   has_many :user_rooms

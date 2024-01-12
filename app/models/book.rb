@@ -1,7 +1,14 @@
 class Book < ApplicationRecord
+
+  # Notifiableモデルを読み込み(【Rails】通知機能を実装してみよう)
+  include Notifiable
+
   belongs_to :user
   has_many :book_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  # ↓【Rails】通知機能を実装してみよう
+  #   as: :notifiableは、BookモデルがNotifiableモデル、つまり通知テーブルが紐づくようになります
+  has_many :notifications, as: :notifiable, dependent: :destroy
 
   # Favoriteモデルのうち、直近の1週間で作成されたいいねを取得(応用課題7a)
   has_many :week_favorites, -> { where(created_at:
@@ -76,4 +83,48 @@ class Book < ApplicationRecord
       Book.where('title LIKE ?', '%'+content+'%')
     end
   end
+
+  # ↓【Rails】通知機能を実装してみよう
+  #   通知の作成メソッド
+
+  #   ActiveRecordのコールバック機能を使用して実装
+  #   コールバックとは、レコードが作成された時や更新された時など、特定のタイミングで自動的に処理を実行する機能
+  after_create do
+    user.followers.each do |follower|
+      notifications.create(user_id: follower.id)
+      # ↑ の記述と同じ
+      #   Notification.create(user_id: follower.id, notifiable_type: “Book”, notifiable_id: id)
+
+      # ポリモーフィック関連は、notifiable_typeとnotifiable_idの2つの値を設定する必要があります
+    end
+  end
+  # ↑ after_create do...end のように実行タイミングと処理を記述すると、
+  #   指定されたタイミングでその処理が実行されます
+
+  #   上記の記述によって、Bookモデルのレコードの作成に合わせて、
+  #   Bookの投稿者のフォロワーを取得し、eachメソッドでそれぞれに対して通知を作成しています
+
+  # has_manyで設定した関連付けに続けて実行すると、自身に関連づけられたインスタンスの作成をすることが可能
+
+  # has_many関連なし
+  # def create
+  #   @post_image = PostImage.new(post_image_params)
+  #   @post_image.user_id = current_user.id
+  #   @post_image.save
+  # end
+
+  # has_many関連あり
+  # def create
+  #   @post_image = current_user.post_images.new(post_image_params)
+  #   @post_image.save
+  # end
+
+  def notification_message
+    "フォローしている#{user.name}さんが#{title}を投稿しました"
+  end
+
+  def notification_path
+    book_path(self)
+  end
+
 end
